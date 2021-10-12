@@ -15,6 +15,8 @@ class FilterData
 
     public $type;
 
+    public $relation;
+
     public function __construct($data)
     {
         list($this->field, $this->condition, $this->value) = $data;

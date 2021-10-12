@@ -21,7 +21,7 @@ class DxAdapterServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('dx-adapter.php'),
+                __DIR__ . '/../config/dx-adapter.php' => config_path('dx-adapter.php'),
             ], 'config');
 
             // Publishing the views.
@@ -50,7 +50,7 @@ class DxAdapterServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'dx-adapter');
+        $this->mergeConfigFrom(__DIR__ . '/../config/dx-adapter.php', 'dx-adapter');
 
         $this->app->bind(DxAdapterRequest::class, function ($app) {
             return DxAdapterRequest::fromRequest($app['request']);

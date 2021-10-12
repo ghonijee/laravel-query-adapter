@@ -14,6 +14,8 @@ class BuilderFilterQuery
 
     protected $conjungtion;
 
+    // protected $
+
     public function __construct($query, FilterData $filterData, $conjungtion)
     {
         $this->query = $query;
@@ -28,6 +30,9 @@ class BuilderFilterQuery
 
     public function query()
     {
+        //TODO: Check apakah field ini adalah relasi filter
+
+
         switch ($this->filterData->type) {
             case ValueDataType::ISDATE:
                 break;

@@ -66,7 +66,7 @@ class DxAdapter
 
     public function process()
     {
-        if ($this->request->has('filter')) {
+        if ($this->request->has(config('dx-adapter.request.filter'))) {
             $this->parseFilter();
         }
         // $this->parseSelect();
