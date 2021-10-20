@@ -4,7 +4,10 @@ namespace Floo\DxAdapter\FilterClass;
 
 use Floo\DxAdapter\Data\FilterData;
 use Floo\DxAdapter\Enums\ValueDataType;
-use Illuminate\Database\Eloquent\Builder;
+use Floo\DxAdapter\FilterClass\QueryClass\BooleanFilter;
+use Floo\DxAdapter\FilterClass\QueryClass\DateFilter;
+use Floo\DxAdapter\FilterClass\QueryClass\NumericFilter;
+use Floo\DxAdapter\FilterClass\QueryClass\StringFilter;
 
 class BuilderFilterQuery
 {
@@ -30,14 +33,18 @@ class BuilderFilterQuery
 
     public function query()
     {
-        //TODO: Check apakah field ini adalah relasi filter
-
-
         switch ($this->filterData->type) {
             case ValueDataType::ISDATE:
+                return DateFilter::build($this->query, $this->filterData, $this->conjungtion);
+                break;
+            case ValueDataType::ISNUMERIC:
+                return NumericFilter::build($this->query, $this->filterData, $this->conjungtion);
                 break;
             case ValueDataType::ISSTRING:
                 return StringFilter::build($this->query, $this->filterData, $this->conjungtion);
+                break;
+            case ValueDataType::ISBOOLEAN:
+                return BooleanFilter::build($this->query, $this->filterData, $this->conjungtion);
                 break;
         }
     }

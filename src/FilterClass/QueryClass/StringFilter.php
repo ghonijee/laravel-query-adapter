@@ -1,6 +1,6 @@
 <?php
 
-namespace Floo\DxAdapter\FilterClass;
+namespace Floo\DxAdapter\FilterClass\QueryClass;
 
 use Exception;
 
@@ -39,7 +39,7 @@ class StringFilter
         return $this->query;
     }
 
-    private function notCondition()
+    protected function notCondition()
     {
         switch ($this->filterData->condition) {
             case 'contains':
@@ -66,7 +66,7 @@ class StringFilter
         }
     }
 
-    private function orCondition()
+    protected function orCondition()
     {
         switch ($this->filterData->condition) {
             case 'contains':
@@ -93,7 +93,7 @@ class StringFilter
         }
     }
 
-    private function andCondition()
+    protected function andCondition()
     {
         switch ($this->filterData->condition) {
             case 'contains':
