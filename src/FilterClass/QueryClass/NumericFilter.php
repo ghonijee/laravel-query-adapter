@@ -41,7 +41,7 @@ class NumericFilter
 
     protected function notCondition()
     {
-        switch ($this->condition) {
+        switch ($this->filterData->condition) {
             case '=':
                 $this->query->where($this->filterData->field, '<>', $this->filterData->value);
                 break;
@@ -66,7 +66,7 @@ class NumericFilter
     protected function orCondition()
     {
 
-        switch ($this->condition) {
+        switch ($this->filterData->condition) {
             case '=':
                 $this->query->orWhere($this->filterData->field, '=', $this->filterData->value);
                 break;
@@ -90,7 +90,7 @@ class NumericFilter
 
     protected function andCondition()
     {
-        switch ($this->condition) {
+        switch ($this->filterData->condition) {
             case '=':
                 $this->query->where($this->filterData->field, '=', $this->filterData->value);
                 break;

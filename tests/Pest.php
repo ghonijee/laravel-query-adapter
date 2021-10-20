@@ -1,5 +1,7 @@
 <?php
 
+use Floo\DxAdapter\Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +13,8 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+
+uses(TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------

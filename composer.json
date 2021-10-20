@@ -24,7 +24,6 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/support": "^8.0",
         "laravel/framework": "^8.0",
         "ext-pdo": "*"
     },
@@ -41,7 +40,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Floo\\DxAdapter\\": "src"
+            "Floo\\DxAdapter\\": "src",
+            "Floo\\DxAdapter\\Database\\Factories\\": "Database/Factories",
+            "Floo\\DxAdapter\\Models\\": "Models"
         }
     },
     "autoload-dev": {
@@ -50,7 +51,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
+        "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
