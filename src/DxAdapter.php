@@ -7,7 +7,7 @@ use Floo\DxAdapter\Builders\FilterQuery;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-
+use Illuminate\Database\Eloquent\Model;
 
 class DxAdapter
 {
@@ -33,6 +33,16 @@ class DxAdapter
 
         $instance->process();
 
+        return $instance;
+    }
+
+    public static function for($subject, ?Request $request = null): self
+    {
+        if (is_subclass_of($subject, Model::class)) {
+            $subject = $subject::query();
+        }
+        $instance = new static($subject, $request);
+        $instance->process();
         return $instance;
     }
 

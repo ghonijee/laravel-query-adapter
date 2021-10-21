@@ -5,40 +5,229 @@ use Floo\DxAdapter\Models\TestComment;
 use Floo\DxAdapter\Models\TestModel;
 use Illuminate\Http\Request;
 
-test('table test model has 3 data', function () {
-    $data = TestModel::all();
-
-    $this->assertCount(3, $data);
+beforeEach(function () {
+    $this->request = new Request();
 });
 
-test('table test comment has 7 data', function () {
-    $data = TestComment::all();
-
-    $this->assertCount(7, $data);
-});
-
-test('can get data with single filter', function () {
-    $request = new Request();
+test('can filter where like', function () {
     $filter = ['name', 'contains', 'ahmad'];
-    $request->replace(['filter' => $filter]);
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', 'like', '%ahmad%')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter where not like', function () {
+    $filter = ['name', 'notcontains', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', 'not like', '%ahmad%')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter where startswith like%', function () {
+    $filter = ['name', 'startswith', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', 'like', 'ahmad%')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter where endswith %like', function () {
+    $filter = ['name', 'endswith', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', 'like', '%ahmad')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter where equals (=)', function () {
+    $filter = ['name', '=', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', 'ahmad')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter where not equals (!=)', function () {
+    $filter = ['name', '!=', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', '!=', 'ahmad')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter where <>', function () {
+    $filter = ['name', '<>', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', '<>', 'ahmad')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter string data', function () {
+    $filter = ['name', 'contains', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('name', 'like', '%ahmad%')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter numeric data', function () {
+    $filter = ['active', '=', '0'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('active', 0)->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter date data', function () {
+    $filter = ['created_at', '=', '2021-10-12'];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+    $queryExpectation = TestModel::where('created_at', '=', '2021-10-12')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter boolean data', function () {
+    $filter = ['active', '=', true];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+
+    $queryExpectation = TestModel::where('active', true)->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter with null data', function () {
+    $filter = ['active', '=', null];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+
+    $queryExpectation = TestModel::where('active', null)->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter with not null data', function () {
+    $filter = ['active', '!=', null];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+
+    $queryExpectation = TestModel::whereNotNull('active')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter data with single condition', function () {
+    $filter = ['name', 'contains', 'ahmad'];
+
+    $this->request->replace(['filter' => $filter]);
 
     $query = TestModel::query();
 
-    $data = DxAdapter::load($query, $request)->get();
+    $data = DxAdapter::load($query, $this->request)->get();
 
-    $this->assertCount(2, $data);
     expect($data)->toHaveCount(2);
 });
 
 test('can multi filter with conjungtion AND', function () {
-    $request = new Request();
     $filter = [['name', 'contains', 'ahmad'], 'and', ['active', '=', 0]];
-    $request->replace(['filter' => $filter]);
+    $this->request->replace(['filter' => $filter]);
 
     $query = TestModel::query();
 
-    $data = DxAdapter::load($query, $request)->get();
+    $data = DxAdapter::load($query, $this->request)->get();
 
-    // $this->assertCount(1, $data);
     expect($data)->toHaveCount(1);
+});
+
+test('can multi filter with conjungtion OR', function () {
+    $filter = [['name', 'contains', 'ahmad'], 'or', ['active', '=', 0]];
+    $this->request->replace(['filter' => $filter]);
+
+    $query = TestModel::query();
+
+    $data = DxAdapter::load($query, $this->request)->toSql();
+    $expected = TestModel::where('name', 'like', 'ahmad')->orWhere('active', 0)->toSql();
+
+    expect($data)->toEqual($expected);
+});
+
+test('can multi filter with conjungtion NOT', function () {
+    $filter = [['name', 'contains', 'ahmad'], '!', ['active', '=', 0]];
+    $this->request->replace(['filter' => $filter]);
+
+    $query = TestModel::query();
+
+    $data = DxAdapter::load($query, $this->request)->toSql();
+    $expected = TestModel::where('name', 'like', 'ahmad')->where('active', '<>', 1)->toSql();
+
+    expect($data)->toEqual($expected);
+});
+
+test('can filter data with grouping condition', function () {
+    $filter = [['name', 'contains', 'ahmad'], 'and', [['active', '=', 0], 'or', ['active', '=', 1]]];
+    $this->request->replace(['filter' => $filter]);
+
+    $query = TestModel::query();
+    $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
+    $expected = TestModel::where('name', 'like', 'ahmad')->where(function ($q) {
+        $q->where('active', 0);
+        $q->orWhere('active', 1);
+    })->toSql();
+
+    expect($queryBuilder)->toEqual($expected);
+});
+
+test('can filter data with relations condition', function () {
+    $filter = [['comments.comment', 'contains', 'test'], 'and', [['active', '=', 0], 'or', ['active', '=', 1]]];
+    $this->request->replace(['filter' => $filter]);
+
+    $query = TestModel::query();
+    $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
+    $expected = TestModel::whereHas('comments', function ($queryComment) {
+        $queryComment->where('comments.comment', 'like', 'ahmad');
+    })->where(function ($q) {
+        $q->where('active', 0);
+        $q->orWhere('active', 1);
+    })->toSql();
+
+    expect($queryBuilder)->toEqual($expected);
 });
