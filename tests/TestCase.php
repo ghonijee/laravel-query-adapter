@@ -1,9 +1,9 @@
 <?php
 
-namespace Floo\DxAdapter\Tests;
+namespace GhoniJee\DxAdapter\Tests;
 
-use Floo\DxAdapter\Models\TestComment;
-use Floo\DxAdapter\Models\TestModel;
+use GhoniJee\DxAdapter\Models\TestComment;
+use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Schema;
@@ -110,5 +110,19 @@ class TestCase extends Orchestra
         $app->config->set('dx-adapter.request.select', 'select');
         $app->config->set('dx-adapter.request.order', 'order');
         $app->config->set('dx-adapter.query.contains', 'LIKE');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            'GhoniJee\\DxAdapter\\DxAdapterServiceProvider',
+        ];
+    }
+
+    protected function getPackageAliases($app)
+    {
+        return [
+            "QueryAdapter" => "GhoniJee\\DxAdapter\\QueryAdapter"
+        ];
     }
 }

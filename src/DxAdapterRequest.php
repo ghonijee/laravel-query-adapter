@@ -1,6 +1,6 @@
 <?php
 
-namespace Floo\DxAdapter;
+namespace GhoniJee\DxAdapter;
 
 use Illuminate\Http\Request;
 

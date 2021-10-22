@@ -1,8 +1,8 @@
 <?php
 
-use Floo\DxAdapter\DxAdapter;
+use GhoniJee\DxAdapter\DxAdapter;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Floo\DxAdapter\Models\TestModel;
+use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Http\Request;
 
 beforeEach(function () {
@@ -20,17 +20,20 @@ test('can load query with method statis DxAdapter::for()', function () {
 });
 
 test('can initializeQueryModel', function () {
-    $dxAdapter = new DxAdapter(TestModel::query());
+    $dxAdapter = new DxAdapter();
+    $dxAdapter->init(TestModel::query());
     expect($dxAdapter->query)->toBeInstanceOf(EloquentBuilder::class);
 });
 
 test('can initializeRequest', function () {
-    $dxAdapter = new DxAdapter(TestModel::query(), $this->request);
+    $dxAdapter = new DxAdapter();
+    $dxAdapter->init(TestModel::query());
     expect($dxAdapter->request)->toBeInstanceOf(Request::class);
 });
 
 test('can process query builder', function () {
-    $dxAdapter = new DxAdapter(TestModel::query());
+    $dxAdapter = new DxAdapter();
+    $dxAdapter->init(TestModel::query());
     expect($dxAdapter->process())->toBeInstanceOf(EloquentBuilder::class);
 });
 

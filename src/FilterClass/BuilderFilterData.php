@@ -1,8 +1,8 @@
 <?php
 
-namespace Floo\DxAdapter\FilterClass;
+namespace GhoniJee\DxAdapter\FilterClass;
 
-use Floo\DxAdapter\Data\FilterData;
+use GhoniJee\DxAdapter\Data\FilterData;
 
 class BuilderFilterData
 {

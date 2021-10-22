@@ -1,6 +1,6 @@
 <?php
 
-use Floo\DxAdapter\Tests\TestCase;
+use GhoniJee\DxAdapter\Tests\TestCase;
 
 /*
 |--------------------------------------------------------------------------

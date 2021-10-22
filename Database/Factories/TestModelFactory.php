@@ -1,8 +1,8 @@
 <?php
 
-namespace Floo\DxAdapter\Database\Factories;
+namespace GhoniJee\DxAdapter\Database\Factories;
 
-use Floo\DxAdapter\Models\TestModel;
+use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TestModelFactory extends Factory

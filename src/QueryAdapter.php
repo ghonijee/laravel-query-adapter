@@ -1,13 +1,13 @@
 <?php
 
-namespace Floo\DxAdapter;
+namespace GhoniJee\DxAdapter;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Floo\DxAdapter\Skeleton\SkeletonClass
+ * @see \GhoniJee\DxAdapter\Skeleton\SkeletonClass
  */
-class DxAdapterFacade extends Facade
+class QueryAdapter extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class DxAdapterFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'dx-adapter';
+        return 'query-adapter';
     }
 }

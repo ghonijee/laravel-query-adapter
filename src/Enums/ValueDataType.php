@@ -1,6 +1,6 @@
 <?php
 
-namespace Floo\DxAdapter\Enums;
+namespace GhoniJee\DxAdapter\Enums;
 
 class ValueDataType
 {

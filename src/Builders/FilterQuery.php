@@ -1,10 +1,10 @@
 <?php
 
-namespace Floo\DxAdapter\Builders;
+namespace GhoniJee\DxAdapter\Builders;
 
-use Floo\DxAdapter\Data\FilterData;
-use Floo\DxAdapter\FilterClass\BuilderFilterData;
-use Floo\DxAdapter\FilterClass\BuilderFilterQuery;
+use GhoniJee\DxAdapter\Data\FilterData;
+use GhoniJee\DxAdapter\FilterClass\BuilderFilterData;
+use GhoniJee\DxAdapter\FilterClass\BuilderFilterQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
@@ -12,35 +12,21 @@ use Illuminate\Support\Str;
 
 trait FilterQuery
 {
-    public $filter;
-
-    public $conjungtion;
-
     protected function parseFilter()
     {
-        $this->replaceSingleQuote();
+        $keyRequest = config('dx-adapter.request.filter');
 
-        $this->serializeFilterData();
+        $this->replaceSingleQuote($keyRequest);
+
+        $this->serializeData($keyRequest);
 
         $this->setArray();
 
         $this->buildFilterData();
 
-        $this->query = $this->buildQuery($this->query, $this->filter);
+        $this->query = $this->buildFilterQuery($this->query, $this->filter);
 
         return $this;
-    }
-
-    private function replaceSingleQuote()
-    {
-        $this->filter = str_replace("'", '"', $this->request->filter);
-    }
-
-    private function serializeFilterData()
-    {
-        if (is_string($this->filter)) {
-            $this->filter = json_decode($this->filter);
-        }
     }
 
     private function setArray()
@@ -55,7 +41,7 @@ trait FilterQuery
         $this->filter = BuilderFilterData::fromRequest($this->filter);
     }
 
-    private function buildQuery(Builder $query, $collection)
+    private function buildFilterQuery(Builder $query, $collection)
     {
         $collection->each(function ($item) use ($query) {
             if (is_string($item)) {
@@ -65,7 +51,7 @@ trait FilterQuery
 
             if ($item instanceof Collection) {
                 $this->query->where(function ($subQuery) use ($item) {
-                    $subQuery = $this->buildQuery($subQuery, $item);
+                    $subQuery = $this->buildFilterQuery($subQuery, $item);
                 });
                 return true;
             }

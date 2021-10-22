@@ -1,8 +1,8 @@
 <?php
 
-use Floo\DxAdapter\DxAdapter;
-use Floo\DxAdapter\Models\TestComment;
-use Floo\DxAdapter\Models\TestModel;
+use GhoniJee\DxAdapter\DxAdapter;
+use GhoniJee\DxAdapter\Models\TestComment;
+use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Http\Request;
 
 beforeEach(function () {

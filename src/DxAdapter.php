@@ -1,9 +1,11 @@
 <?php
 
-namespace Floo\DxAdapter;
+namespace GhoniJee\DxAdapter;
 
 use Exception;
-use Floo\DxAdapter\Builders\FilterQuery;
+use GhoniJee\DxAdapter\Actions\SerializeData;
+use GhoniJee\DxAdapter\Builders\FilterQuery;
+use GhoniJee\DxAdapter\Builders\SelectQuery;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -12,15 +14,23 @@ use Illuminate\Database\Eloquent\Model;
 class DxAdapter
 {
     use FilterQuery;
+    use SelectQuery;
+    use SerializeData;
 
     public $query;
 
     public $request;
 
-    public function __construct($query, ?Request $request = null)
+    public $filter;
+
+    public $conjungtion;
+
+    public $select;
+
+    public function init($query, ?Request $request = null)
     {
         $this->initializeQueryModel($query)
-            ->initializeRequest($request ?? app(Request::class));
+            ->initializeRequest($request);
     }
 
     public static function load($query, ?Request $request = null)
@@ -29,7 +39,8 @@ class DxAdapter
             $query = $query::query();
         }
 
-        $instance = new static($query, $request);
+        $instance = new static();
+        $instance->init($query, $request);
 
         $instance->process();
 
@@ -41,7 +52,8 @@ class DxAdapter
         if (is_subclass_of($subject, Model::class)) {
             $subject = $subject::query();
         }
-        $instance = new static($subject, $request);
+        $instance = new static();
+        $instance->init($subject, $request);
         $instance->process();
         return $instance;
     }
@@ -79,7 +91,10 @@ class DxAdapter
         if ($this->request->has(config('dx-adapter.request.filter'))) {
             $this->parseFilter();
         }
-        // $this->parseSelect();
+        if ($this->request->has(config('dx-adapter.request.select'))) {
+            $this->parseSelect();
+        }
+
         // $this->applySort();
         // $this->setNextPagePaginate();
 

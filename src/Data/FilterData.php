@@ -1,9 +1,9 @@
 <?php
 
-namespace Floo\DxAdapter\Data;
+namespace GhoniJee\DxAdapter\Data;
 
 use DateTime;
-use Floo\DxAdapter\Enums\ValueDataType;
+use GhoniJee\DxAdapter\Enums\ValueDataType;
 
 class FilterData
 {

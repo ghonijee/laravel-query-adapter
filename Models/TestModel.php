@@ -1,6 +1,6 @@
 <?php
 
-namespace Floo\DxAdapter\Models;
+namespace GhoniJee\DxAdapter\Models;
 
 use Database\Factories\TestModelFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,11 +13,6 @@ class TestModel extends Model
 
     protected $connection = 'mysql';
     protected $guarded = [];
-
-    protected static function newFactory()
-    {
-        return TestModelFactory::new();
-    }
 
     public static function createWithNameAndLastName(string $name, $lastName): self
     {
@@ -39,7 +34,7 @@ class TestModel extends Model
 
     public function comments()
     {
-        return $this->hasMany(TestComment::class);
+        return $this->hasMany(TestComment::class, 'test_model_id');
     }
 
     public function scopeActive(Builder $query)

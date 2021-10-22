@@ -1,6 +1,6 @@
 <?php
 
-namespace Floo\DxAdapter;
+namespace GhoniJee\DxAdapter;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -57,8 +57,8 @@ class DxAdapterServiceProvider extends ServiceProvider
         });
 
         // Register the main class to use with the facade
-        // $this->app->singleton('dx-adapter', function () {
-        //     return new DxAdapter;
-        // });
+        $this->app->bind('query-adapter', function ($app) {
+            return new DxAdapter();
+        });
     }
 }

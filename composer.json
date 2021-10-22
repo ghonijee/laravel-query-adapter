@@ -1,21 +1,16 @@
 {
-    "name": "floo/dx-adapter",
+    "name": "ghonijee/query-adapter",
     "description": "Query builder for Laravel model, specifically for DevExtream Table",
     "keywords": [
-        "floo",
+        "ghoni-jee",
         "query",
-        "dx-adapter",
+        "query-adapter",
         "query-builder"
     ],
-    "homepage": "https://github.com/floo/dx-adapter",
+    "homepage": "https://github.com/ghonijee/query-adapter",
     "license": "MIT",
     "type": "library",
     "authors": [
-        {
-            "name": "Yunus Floo",
-            "email": "yunus@floo.id",
-            "role": "Developer"
-        },
         {
             "name": "Ghoni Jee",
             "email": "akughoni@gmail.com",
@@ -40,19 +35,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Floo\\DxAdapter\\": "src",
-            "Floo\\DxAdapter\\Database\\Factories\\": "Database/Factories",
-            "Floo\\DxAdapter\\Models\\": "Models"
+            "GhoniJee\\DxAdapter\\": "src",
+            "GhoniJee\\DxAdapter\\Database\\Factories\\": "Database/Factories",
+            "GhoniJee\\DxAdapter\\Models\\": "Models"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Floo\\DxAdapter\\Tests\\": "tests"
+            "GhoniJee\\DxAdapter\\Tests\\": "tests"
         }
     },
     "scripts": {
         "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=90"
     },
     "config": {
         "sort-packages": true
@@ -60,10 +55,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Floo\\DxAdapter\\DxAdapterServiceProvider"
+                "GhoniJee\\DxAdapter\\DxAdapterServiceProvider"
             ],
             "aliases": {
-                "DxAdapter": "Floo\\DxAdapter\\DxAdapterFacade"
+                "QueryAdapter": "GhoniJee\\DxAdapter\\QueryAdapter"
             }
         }
     }

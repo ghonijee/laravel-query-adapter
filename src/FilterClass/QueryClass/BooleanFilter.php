@@ -1,6 +1,6 @@
 <?php
 
-namespace Floo\DxAdapter\FilterClass\QueryClass;
+namespace GhoniJee\DxAdapter\FilterClass\QueryClass;
 
 use Exception;
 
