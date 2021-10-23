@@ -1,7 +1,7 @@
 # Laravel Query Adapter
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/GhoniJee/dx-adapter.svg?style=flat-square)](https://packagist.org/packages/GhoniJee/dx-adapter)
-[![Total Downloads](https://img.shields.io/packagist/dt/GhoniJee/dx-adapter.svg?style=flat-square)](https://packagist.org/packages/GhoniJee/dx-adapter)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/GhoniJee/dx-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
+[![Total Downloads](https://img.shields.io/packagist/dt/GhoniJee/dx-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
 ![GitHub Actions](https://github.com/GhoniJee/dx-adapter/actions/workflows/main.yml/badge.svg)
 
 
@@ -10,7 +10,7 @@
 You can install the package via composer:
 
 ```bash
-composer require ghonijee/dx-adapter
+composer require ghonijee/query-adapter
 ```
 
 ## Usage
@@ -41,17 +41,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security related issues, please email yunus@GhoniJee.id instead of using the issue tracker.
+If you discover any security related issues, please email akughoni@gamil.id instead of using the issue tracker.
 
 ## Credits
 
--   [Yunus GhoniJee](https://github.com/GhoniJee)
--   [All Contributors](../../contributors)
+-   [Yunus](https://github.com/ghonijee)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
