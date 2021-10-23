@@ -12,8 +12,6 @@ use Illuminate\Support\Str;
 
 trait SelectQuery
 {
-    public $relationSelect;
-
     protected function parseSelect()
     {
         $keyRequest = config('dx-adapter.request.select');

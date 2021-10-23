@@ -1,7 +1,6 @@
 <?php
 
 use GhoniJee\DxAdapter\DxAdapter;
-use GhoniJee\DxAdapter\Models\TestComment;
 use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Http\Request;
 

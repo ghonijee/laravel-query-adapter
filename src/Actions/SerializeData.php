@@ -4,7 +4,7 @@ namespace GhoniJee\DxAdapter\Actions;
 
 trait SerializeData
 {
-    protected function serializeData(string $key)
+    protected function serializeData(string $key): array
     {
         if (is_string($this->{$key})) {
             return json_decode($this->replaceSingleQuote($key));

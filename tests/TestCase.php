@@ -38,6 +38,8 @@ class TestCase extends Orchestra
         $app->config->set('dx-adapter.request.filter', 'filter');
         $app->config->set('dx-adapter.request.select', 'select');
         $app->config->set('dx-adapter.request.order', 'sort');
+        $app->config->set('dx-adapter.request.skip', 'skip');
+        $app->config->set('dx-adapter.request.take', 'take');
         $app->config->set('dx-adapter.query.contains', 'LIKE');
     }
 

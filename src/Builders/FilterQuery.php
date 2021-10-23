@@ -29,7 +29,7 @@ trait FilterQuery
     private function setArray()
     {
         if (is_string($this->filter[0])) {
-            $this->filter = [$this->filter];
+            $this->filter = collect([$this->filter]);
         }
     }
 

@@ -12,12 +12,12 @@ class BuilderFilterData
      */
     public Collection $data;
 
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->data = collect($data);
     }
 
-    public static function fromRequest(array $data)
+    public static function fromRequest($data)
     {
         $instance = new self($data);
         $instance->build();
