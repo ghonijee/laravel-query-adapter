@@ -7,7 +7,7 @@ return [
     'request' => [
         'filter' => 'filter',
         'select' => 'select',
-        'order' => 'orderBy'
+        'order' => 'sort'
     ],
     'query' => [
         'contains' => 'LIKE'

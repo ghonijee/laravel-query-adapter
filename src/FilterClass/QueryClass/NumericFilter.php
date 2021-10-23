@@ -27,88 +27,15 @@ class NumericFilter
     {
         switch ($this->conjungtion) {
             case '!':
-                $this->notCondition();
+                $this->query->whereNot($this->filterData->field, $this->filterData->condition, $this->filterData->value);
                 break;
             case 'or':
-                $this->orCondition();
+                $this->query->orWhere($this->filterData->field, $this->filterData->condition, $this->filterData->value);
                 break;
             default:
-                $this->andCondition();
+                $this->query->where($this->filterData->field, $this->filterData->condition, $this->filterData->value);
                 break;
         }
         return $this->query;
-    }
-
-    protected function notCondition()
-    {
-        switch ($this->filterData->condition) {
-            case '=':
-                $this->query->where($this->filterData->field, '<>', $this->filterData->value);
-                break;
-            case '<':
-                $this->query->where($this->filterData->field, '>', $this->filterData->value);
-                break;
-            case '<=':
-                $this->query->where($this->filterData->field, '>=', $this->filterData->value);
-                break;
-            case '>':
-                $this->query->where($this->filterData->field, '<', $this->filterData->value);
-                break;
-            case '>=':
-                $this->query->where($this->filterData->field, '<=', $this->filterData->value);
-                break;
-            default:
-                throw new Exception("Error Processing Request");
-                break;
-        }
-    }
-
-    protected function orCondition()
-    {
-
-        switch ($this->filterData->condition) {
-            case '=':
-                $this->query->orWhere($this->filterData->field, '=', $this->filterData->value);
-                break;
-            case '<':
-                $this->query->orWhere($this->filterData->field, '<', $this->filterData->value);
-                break;
-            case '<=':
-                $this->query->orWhere($this->filterData->field, '<=', $this->filterData->value);
-                break;
-            case '>':
-                $this->query->orWhere($this->filterData->field, '>', $this->filterData->value);
-                break;
-            case '>=':
-                $this->query->orWhere($this->filterData->field, '>=', $this->filterData->value);
-                break;
-            default:
-                throw new Exception("Error Processing Request");
-                break;
-        }
-    }
-
-    protected function andCondition()
-    {
-        switch ($this->filterData->condition) {
-            case '=':
-                $this->query->where($this->filterData->field, '=', $this->filterData->value);
-                break;
-            case '<':
-                $this->query->where($this->filterData->field, '<', $this->filterData->value);
-                break;
-            case '<=':
-                $this->query->where($this->filterData->field, '<=', $this->filterData->value);
-                break;
-            case '>':
-                $this->query->where($this->filterData->field, '>', $this->filterData->value);
-                break;
-            case '>=':
-                $this->query->where($this->filterData->field, '>=', $this->filterData->value);
-                break;
-            default:
-                throw new Exception("Error Processing Request");
-                break;
-        }
     }
 }

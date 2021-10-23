@@ -40,26 +40,28 @@ class FilterData
             case $this->isNumeric():
                 $this->type = ValueDataType::ISNUMERIC;
                 break;
+            case $this->isNull():
+                $this->type = ValueDataType::ISNULL;
+                break;
             case $this->isString():
                 $this->type = ValueDataType::ISSTRING;
                 break;
         }
     }
 
+    private function isNull()
+    {
+        return is_null($this->value);
+    }
+
     private function isString()
     {
-        if (is_string($this->value)) {
-            return true;
-        }
-        return false;
+        return is_string($this->value);
     }
 
     private function isBoolean()
     {
-        if (is_bool($this->value)) {
-            return true;
-        }
-        return false;
+        return is_bool($this->value);
     }
 
     private function isDateFormat()

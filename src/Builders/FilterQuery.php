@@ -16,14 +16,11 @@ trait FilterQuery
     {
         $keyRequest = config('dx-adapter.request.filter');
 
-        $this->replaceSingleQuote($keyRequest);
-
-        $this->serializeData($keyRequest);
+        $this->filter = $this->serializeData($keyRequest);
 
         $this->setArray();
 
         $this->buildFilterData();
-
         $this->query = $this->buildFilterQuery($this->query, $this->filter);
 
         return $this;

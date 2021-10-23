@@ -5,6 +5,7 @@ namespace GhoniJee\DxAdapter;
 use Exception;
 use GhoniJee\DxAdapter\Actions\SerializeData;
 use GhoniJee\DxAdapter\Builders\FilterQuery;
+use GhoniJee\DxAdapter\Builders\SortByQuery;
 use GhoniJee\DxAdapter\Builders\SelectQuery;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -16,6 +17,7 @@ class DxAdapter
     use FilterQuery;
     use SelectQuery;
     use SerializeData;
+    use SortByQuery;
 
     public $query;
 
@@ -26,6 +28,8 @@ class DxAdapter
     public $conjungtion;
 
     public $select;
+
+    public $sort;
 
     public function init($query, ?Request $request = null)
     {
@@ -39,7 +43,7 @@ class DxAdapter
             $query = $query::query();
         }
 
-        $instance = new static();
+        $instance = new self();
         $instance->init($query, $request);
 
         $instance->process();
@@ -52,7 +56,7 @@ class DxAdapter
         if (is_subclass_of($subject, Model::class)) {
             $subject = $subject::query();
         }
-        $instance = new static();
+        $instance = new self();
         $instance->init($subject, $request);
         $instance->process();
         return $instance;
@@ -95,7 +99,10 @@ class DxAdapter
             $this->parseSelect();
         }
 
-        // $this->applySort();
+        if ($this->request->has(config('dx-adapter.request.order'))) {
+            $this->applySort();
+        }
+
         // $this->setNextPagePaginate();
 
         return $this->query;

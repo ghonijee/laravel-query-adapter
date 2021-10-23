@@ -5,7 +5,7 @@ namespace GhoniJee\DxAdapter\FilterClass\QueryClass;
 use GhoniJee\DxAdapter\Data\FilterData;
 use Illuminate\Database\Eloquent\Builder;
 
-class BooleanFilter
+class NullFilter
 {
     protected Builder $query;
     protected FilterData $filterData;
@@ -28,13 +28,21 @@ class BooleanFilter
     {
         switch ($this->conjungtion) {
             case '!':
-                $this->query->where($this->filterData->field, '!=', $this->filterData->value);
+                $this->query->whereNotNull($this->filterData->field);
                 break;
             case 'or':
-                $this->query->orWhere($this->filterData->field, '=', $this->filterData->value);
+                if ($this->filterData->condition == '!=') {
+                    $this->query->orWhereNotNull($this->filterData->field);
+                } else {
+                    $this->query->orWhereNull($this->filterData->field);
+                }
                 break;
             default:
-                $this->query->where($this->filterData->field, '=', $this->filterData->value);
+                if ($this->filterData->condition == '!=') {
+                    $this->query->whereNotNull($this->filterData->field);
+                } else {
+                    $this->query->whereNull($this->filterData->field);
+                }
                 break;
         }
         return $this->query;

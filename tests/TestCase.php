@@ -24,6 +24,39 @@ class TestCase extends Orchestra
 
         Schema::dropAllTables();
 
+        $this->createTestModel();
+
+        $this->createTestComment();
+    }
+
+    protected function usesMySqlConnection(Application $app)
+    {
+        $app->config->set('database.default', 'mysql');
+        $app->config->set('database.connections.mysql.database', 'test_package');
+        $app->config->set('database.connections.mysql.username', 'root');
+        $app->config->set('database.connections.mysql.password', 'asd1234!');
+        $app->config->set('dx-adapter.request.filter', 'filter');
+        $app->config->set('dx-adapter.request.select', 'select');
+        $app->config->set('dx-adapter.request.order', 'sort');
+        $app->config->set('dx-adapter.query.contains', 'LIKE');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            'GhoniJee\\DxAdapter\\DxAdapterServiceProvider',
+        ];
+    }
+
+    protected function getPackageAliases($app)
+    {
+        return [
+            "QueryAdapter" => "GhoniJee\\DxAdapter\\QueryAdapter"
+        ];
+    }
+
+    protected function createTestModel()
+    {
         Schema::create('test_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -31,13 +64,6 @@ class TestCase extends Orchestra
             $table->string('address')->nullable();
             $table->string('gender')->nullable();
             $table->boolean('active')->default(false);
-            $table->timestamps();
-        });
-
-        Schema::create('test_comments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('test_model_id');
-            $table->string('comment')->nullable();
             $table->timestamps();
         });
 
@@ -66,6 +92,16 @@ class TestCase extends Orchestra
         ];
 
         TestModel::insert($data);
+    }
+
+    protected function createTestComment()
+    {
+        Schema::create('test_comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('test_model_id');
+            $table->string('comment')->nullable();
+            $table->timestamps();
+        });
 
         $comment = [
             [
@@ -98,31 +134,5 @@ class TestCase extends Orchestra
             ]
         ];
         TestComment::insert($comment);
-    }
-
-    protected function usesMySqlConnection(Application $app)
-    {
-        $app->config->set('database.default', 'mysql');
-        $app->config->set('database.connections.mysql.database', 'test_package');
-        $app->config->set('database.connections.mysql.username', 'root');
-        $app->config->set('database.connections.mysql.password', 'asd1234!');
-        $app->config->set('dx-adapter.request.filter', 'filter');
-        $app->config->set('dx-adapter.request.select', 'select');
-        $app->config->set('dx-adapter.request.order', 'order');
-        $app->config->set('dx-adapter.query.contains', 'LIKE');
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            'GhoniJee\\DxAdapter\\DxAdapterServiceProvider',
-        ];
-    }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            "QueryAdapter" => "GhoniJee\\DxAdapter\\QueryAdapter"
-        ];
     }
 }

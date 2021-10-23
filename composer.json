@@ -47,7 +47,8 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
-        "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=90"
+        "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=80",
+        "stan": "php -d memory_limit=4G vendor/bin/phpstan --level=5 analyse src"
     },
     "config": {
         "sort-packages": true

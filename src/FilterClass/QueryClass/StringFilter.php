@@ -55,13 +55,10 @@ class StringFilter
                 $this->query->orWhere($this->filterData->field, 'not like', "%{$this->filterData->value}");
                 break;
             case '=':
-                $this->query->orWhere($this->filterData->field, '<>', "{$this->filterData->value}");
-                break;
-            case '<>':
-                $this->query->orWhere($this->filterData->field, '=', "{$this->filterData->value}");
+                $this->query->whereNot($this->filterData->field, $this->filterData->value);
                 break;
             default:
-                throw new Exception("Error Processing Request");
+                $this->query->whereNot($this->filterData->field, $this->filterData->condition, $this->filterData->value);
                 break;
         }
     }
@@ -82,14 +79,10 @@ class StringFilter
                 $this->query->orWhere($this->filterData->field, 'like', "%{$this->filterData->value}");
                 break;
             case '=':
-                $this->query->orWhere($this->filterData->field, '=', "{$this->filterData->value}");
-                break;
-            case '<>':
-                $this->query->orWhere($this->filterData->field, '<>', "{$this->filterData->value}");
+                $this->query->orWhere($this->filterData->field, $this->filterData->value);
                 break;
             default:
-                throw new Exception("Error Processing Request");
-                break;
+                $this->query->where($this->filterData->field, $this->filterData->condition, $this->filterData->value);
         }
     }
 
@@ -109,24 +102,10 @@ class StringFilter
                 $this->query->where($this->filterData->field, 'like', "%{$this->filterData->value}");
                 break;
             case '=':
-                if ($this->filterData->value == null) {
-                    $this->query->where($this->filterData->field, NULL);
-                } else {
-                    $this->query->where($this->filterData->field, '=', "{$this->filterData->value}");
-                }
-                break;
-            case '!=':
-                if ($this->filterData->value == null) {
-                    $this->query->whereNotNull($this->filterData->field);
-                } else {
-                    $this->query->where($this->filterData->field, '!=', "{$this->filterData->value}");
-                }
-                break;
-            case '<>':
-                $this->query->where($this->filterData->field, '<>', "{$this->filterData->value}");
+                $this->query->where($this->filterData->field, $this->filterData->value);
                 break;
             default:
-                throw new Exception("Error Processing Request");
+                $this->query->where($this->filterData->field, $this->filterData->condition, $this->filterData->value);
                 break;
         }
     }

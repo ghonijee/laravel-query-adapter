@@ -3,20 +3,21 @@
 namespace GhoniJee\DxAdapter\FilterClass;
 
 use GhoniJee\DxAdapter\Data\FilterData;
+use Illuminate\Support\Collection;
 
 class BuilderFilterData
 {
     /**
      *  @var Collection $data
      */
-    public $data;
+    public Collection $data;
 
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = collect($data);
     }
 
-    public static function fromRequest($data)
+    public static function fromRequest(array $data)
     {
         $instance = new self($data);
         $instance->build();

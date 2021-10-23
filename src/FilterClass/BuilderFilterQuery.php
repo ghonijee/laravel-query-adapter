@@ -2,10 +2,12 @@
 
 namespace GhoniJee\DxAdapter\FilterClass;
 
+use Exception;
 use GhoniJee\DxAdapter\Data\FilterData;
 use GhoniJee\DxAdapter\Enums\ValueDataType;
 use GhoniJee\DxAdapter\FilterClass\QueryClass\BooleanFilter;
 use GhoniJee\DxAdapter\FilterClass\QueryClass\DateFilter;
+use GhoniJee\DxAdapter\FilterClass\QueryClass\NullFilter;
 use GhoniJee\DxAdapter\FilterClass\QueryClass\NumericFilter;
 use GhoniJee\DxAdapter\FilterClass\QueryClass\StringFilter;
 
@@ -32,18 +34,18 @@ class BuilderFilterQuery
     public function query()
     {
         switch ($this->filterData->type) {
+            case ValueDataType::ISNULL:
+                return NullFilter::build($this->query, $this->filterData, $this->conjungtion);
             case ValueDataType::ISDATE:
                 return DateFilter::build($this->query, $this->filterData, $this->conjungtion);
-                break;
             case ValueDataType::ISNUMERIC:
                 return NumericFilter::build($this->query, $this->filterData, $this->conjungtion);
-                break;
             case ValueDataType::ISSTRING:
                 return StringFilter::build($this->query, $this->filterData, $this->conjungtion);
-                break;
             case ValueDataType::ISBOOLEAN:
                 return BooleanFilter::build($this->query, $this->filterData, $this->conjungtion);
-                break;
+            default:
+                throw new Exception("Query class not found");
         }
     }
 }

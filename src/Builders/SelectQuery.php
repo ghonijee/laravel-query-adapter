@@ -18,9 +18,7 @@ trait SelectQuery
     {
         $keyRequest = config('dx-adapter.request.select');
 
-        $this->replaceSingleQuote($keyRequest);
-
-        $this->serializeData($keyRequest);
+        $this->select = $this->serializeData($keyRequest);
 
         $this->buildRealationSelectQuery();
 

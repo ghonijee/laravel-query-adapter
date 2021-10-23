@@ -15,7 +15,7 @@ class SelectData
     public function __construct(string $field)
     {
         $this->field = $field;
-        $this->isRelation = $this->isRelationSelect($field);;
+        $this->isRelation = $this->isRelationSelect($field);
     }
 
     public static function fromRequest(string $item)

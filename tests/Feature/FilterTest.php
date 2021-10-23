@@ -132,13 +132,13 @@ test('can filter boolean data', function () {
 });
 
 test('can filter with null data', function () {
-    $filter = ['active', '=', null];
+    $filter = ['active', '=', NULL];
 
     $this->request->replace(['filter' => $filter]);
 
     $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
 
-    $queryExpectation = TestModel::where('active', null)->toSql();
+    $queryExpectation = TestModel::whereNull('active')->toSql();
 
     expect($query)->toEqual($queryExpectation);
 });
@@ -151,6 +151,18 @@ test('can filter with not null data', function () {
     $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
 
     $queryExpectation = TestModel::whereNotNull('active')->toSql();
+
+    expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter multiple null data', function () {
+    $filter = [['active', '!=', null], 'or', ['nama', '=', null]];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->toSql();
+
+    $queryExpectation = TestModel::whereNotNull('active')->orWhereNull('nama')->toSql();
 
     expect($query)->toEqual($queryExpectation);
 });
@@ -173,9 +185,11 @@ test('can multi filter with conjungtion AND', function () {
 
     $query = TestModel::query();
 
-    $data = DxAdapter::load($query, $this->request)->get();
-
-    expect($data)->toHaveCount(1);
+    $data = DxAdapter::load($query, $this->request);
+    $query = $data->toSql();
+    $queryExpectation = TestModel::where('name', 'like', '%ahmad%')->where('active', 0)->toSql();
+    expect($query)->toEqual($queryExpectation);
+    expect($data->get())->toHaveCount(1);
 });
 
 test('can multi filter with conjungtion OR', function () {
@@ -197,7 +211,7 @@ test('can multi filter with conjungtion NOT', function () {
     $query = TestModel::query();
 
     $data = DxAdapter::load($query, $this->request)->toSql();
-    $expected = TestModel::where('name', 'like', 'ahmad')->where('active', '<>', 1)->toSql();
+    $expected = TestModel::where('name', 'like', 'ahmad')->whereNot('active', 1)->toSql();
 
     expect($data)->toEqual($expected);
 });
