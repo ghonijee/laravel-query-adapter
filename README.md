@@ -1,23 +1,28 @@
-# Very short description of the package
+# Laravel Query Adapter
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/GhoniJee/dx-adapter.svg?style=flat-square)](https://packagist.org/packages/GhoniJee/dx-adapter)
 [![Total Downloads](https://img.shields.io/packagist/dt/GhoniJee/dx-adapter.svg?style=flat-square)](https://packagist.org/packages/GhoniJee/dx-adapter)
 ![GitHub Actions](https://github.com/GhoniJee/dx-adapter/actions/workflows/main.yml/badge.svg)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require GhoniJee/dx-adapter
+composer require ghonijee/dx-adapter
 ```
 
 ## Usage
 
 ```php
-// Usage description here
+$data = QueryAdapter::for(TestModel::class)->get();
+// or
+$data = QueryAdapter::load(TestModel::query())->get();
+//or
+$data = DxAdapter::for(TestModel::class)->get();
+// or
+$data = DxAdapter::load(TestModel::query())->get();
 ```
 
 ### Testing
