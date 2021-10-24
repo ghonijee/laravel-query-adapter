@@ -1,9 +1,8 @@
 # Laravel Query Adapter
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ghonijee/laravel-query-adapter/.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
-[![Total Downloads](https://img.shields.io/packagist/dt/ghonijee/laravel-query-adapter/.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
-
-[![Actions Status](https://github.com/ghonijee/laravel-query-adapter/actions/workflows/main.yml/badge.svg))](https://github.com/ghonijee/laravel-query-adapter/actions)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ghonijee/laravel-query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
+[![Total Downloads](https://img.shields.io/packagist/dt/ghonijee/laravel-query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
+[![Actions Status](https://github.com/ghonijee/laravel-query-adapter/actions/workflows/main.yml/badge.svg)](https://github.com/ghonijee/laravel-query-adapter/actions)
 
 ## Installation
 
