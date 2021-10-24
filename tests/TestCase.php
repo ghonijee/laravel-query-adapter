@@ -20,7 +20,7 @@ class TestCase extends Orchestra
 
     protected function setUpDatabase(Application $app)
     {
-        $this->usesMySqlConnection($this->app);
+        $this->usesMySqlConnection($app);
 
         Schema::dropAllTables();
 
