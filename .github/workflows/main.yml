@@ -22,7 +22,7 @@ jobs:
 
         name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
-                services:
+        services:
             mysql:
                 image: mysql:5.7
                 env:
