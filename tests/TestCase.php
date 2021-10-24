@@ -34,7 +34,9 @@ class TestCase extends Orchestra
         $app->config->set('database.default', 'mysql');
         $app->config->set('database.connections.mysql.database', $_ENV['DB_DATABASE']);
         $app->config->set('database.connections.mysql.username', $_ENV['DB_USERNAME']);
-        $app->config->set('database.connections.mysql.password', $_ENV['DB_PASSWORD']);
+        if (isset($_ENV['DB_PASSWORD'])) {
+            $app->config->set('database.connections.mysql.password', $_ENV['DB_PASSWORD']);
+        }
         $app->config->set('dx-adapter.request.filter', 'filter');
         $app->config->set('dx-adapter.request.select', 'select');
         $app->config->set('dx-adapter.request.order', 'sort');
