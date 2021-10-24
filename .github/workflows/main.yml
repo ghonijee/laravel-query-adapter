@@ -58,5 +58,5 @@ jobs:
                 DB_HOST: localhost
                 DB_DATABASE: laravel_query_adapter
                 DB_USER: root
-                DB_PORT: ${{ job.services.mysql.ports[3306] }}
+                DB_PORT: 3306
               run: vendor/bin/pest
