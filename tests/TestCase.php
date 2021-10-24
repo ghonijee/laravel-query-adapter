@@ -20,7 +20,7 @@ class TestCase extends Orchestra
 
     protected function setUpDatabase(Application $app)
     {
-        $this->usesMySqlConnection($this->app);
+        $this->usesMySqlConnection($app);
 
         Schema::dropAllTables();
 
@@ -32,9 +32,13 @@ class TestCase extends Orchestra
     protected function usesMySqlConnection(Application $app)
     {
         $app->config->set('database.default', 'mysql');
-        $app->config->set('database.connections.mysql.database', 'test_package');
-        $app->config->set('database.connections.mysql.username', 'root');
-        $app->config->set('database.connections.mysql.password', 'asd1234!');
+        $app->config->set('database.connections.mysql.host', $_ENV['DB_HOST']);
+        $app->config->set('database.connections.mysql.port', $_ENV['DB_PORT']);
+        $app->config->set('database.connections.mysql.database', $_ENV['DB_DATABASE']);
+        $app->config->set('database.connections.mysql.username', $_ENV['DB_USERNAME']);
+        if (isset($_ENV['DB_PASSWORD'])) {
+            $app->config->set('database.connections.mysql.password', $_ENV['DB_PASSWORD']);
+        }
         $app->config->set('dx-adapter.request.filter', 'filter');
         $app->config->set('dx-adapter.request.select', 'select');
         $app->config->set('dx-adapter.request.order', 'sort');
