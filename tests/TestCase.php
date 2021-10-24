@@ -32,6 +32,8 @@ class TestCase extends Orchestra
     protected function usesMySqlConnection(Application $app)
     {
         $app->config->set('database.default', 'mysql');
+        $app->config->set('database.connections.mysql.host', $_ENV['DB_HOST']);
+        $app->config->set('database.connections.mysql.port', $_ENV['DB_PORT']);
         $app->config->set('database.connections.mysql.database', $_ENV['DB_DATABASE']);
         $app->config->set('database.connections.mysql.username', $_ENV['DB_USERNAME']);
         if (isset($_ENV['DB_PASSWORD'])) {
