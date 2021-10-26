@@ -11,6 +11,37 @@ Package `QueryAdapter` ini juga mengimplementasikan Laravel default Eloquent bui
 
 ## Penggunaan Dasar
 
+Package ini dapat digunakan dengan beberapa opsi, bisa menggunakan Facade `QueryBuilder` atau langsung menggunakan Class `DxAdapter`. 
+
+### Jika menggunakan model langsung
+
+```php
+use GhoniJee\DxAdapter\QueryAdapter;
+
+$data = QueryAdapter::for(User::class)->get()
+```
+bisa juga dengan memanggil class `DxAdapter`.
+```php
+use GhoniJee\DxAdapter\DxAdapter;
+
+$data = DxAdapter::for(User::class)->get()
+```
+
+### Jika menggunakan query atau instance model yang sudah dibuat sebelumnya
+```php
+use GhoniJee\DxAdapter\QueryAdapter;
+
+$qeury = User::query();
+$data = QueryAdapter::load($query)->get()
+```
+bisa juga dengan memanggil class `DxAdapter`.
+```php
+use GhoniJee\DxAdapter\DxAdapter;
+
+$qeury = User::query();
+$data = DxAdapter::load($query)->get()
+```
+
 ### Membuat query untuk filter data berdasarkan request: `/users?filter=["name","contains","jhon"]`:
 
   
