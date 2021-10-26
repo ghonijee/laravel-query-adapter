@@ -8,6 +8,13 @@ Package ini dibuat untuk memudahkan proses mendapatkan data dengan menggunakan f
 
 Package `QueryAdapter` ini juga mengimplementasikan Laravel default Eloquent builder. Ini membuat anda dapat menggunakan fungsi-fungsi yang ada di Eloquent dapat anda gunakan juga menggunakan package ini.
   
+## Instalasi
+
+Package laravel-query-adapter ini dapat di install melalui composer dengan command
+```bash
+composer require ghonijee/laravel-query-adapter
+```
+
 
 ## Penggunaan Dasar
 
@@ -18,13 +25,13 @@ Package ini dapat digunakan dengan beberapa opsi, bisa menggunakan Facade `Query
 ```php
 use GhoniJee\DxAdapter\QueryAdapter;
 
-$data = QueryAdapter::for(User::class)->get()
+$data = QueryAdapter::for(User::class)->get();
 ```
 bisa juga dengan memanggil class `DxAdapter`.
 ```php
 use GhoniJee\DxAdapter\DxAdapter;
 
-$data = DxAdapter::for(User::class)->get()
+$data = DxAdapter::for(User::class)->get();
 ```
 
 ### Jika menggunakan query atau instance model yang sudah dibuat sebelumnya
@@ -32,15 +39,27 @@ $data = DxAdapter::for(User::class)->get()
 use GhoniJee\DxAdapter\QueryAdapter;
 
 $qeury = User::query();
-$data = QueryAdapter::load($query)->get()
+$data = QueryAdapter::load($query)->get();
 ```
 bisa juga dengan memanggil class `DxAdapter`.
 ```php
 use GhoniJee\DxAdapter\DxAdapter;
 
 $qeury = User::query();
-$data = DxAdapter::load($query)->get()
+$data = DxAdapter::load($query)->get();
 ```
+
+### Menambahkan custom filter diluar API Request yang dikirim
+Karena class yang ada merupakan instance dari Eloqeunt laravel, jadi semua method yang ada pada eloquent bisa juga dipanggil dengan chaining method.
+
+```php
+use GhoniJee\DxAdapter\QueryAdapter;
+
+$qeury = User::query();
+$data = QueryAdapter::load($query)->where('active', true)->get();
+```
+
+
 
 ### Membuat query untuk filter data berdasarkan request: `/users?filter=["name","contains","jhon"]`:
 
