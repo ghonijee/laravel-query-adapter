@@ -1,9 +1,3 @@
----
-title: Pengenalan
-weight: 1
----
-
-
 Package ini dibuat untuk memudahkan proses mendapatkan data dengan menggunakan filter, sort, atau select berdasarkan request data yang dikirimkan. Package ini secara khusus diciptakan untuk memenuhi kebutuhan integrasi antara Framework [Laravel](https://laravel.com) dengan [Data Grid by DevExpress](https://js.devexpress.com/Overview/DataGrid/). Namun secara umum package ini dapat digunakan meskipun tanpa menggunakan [Data Grid by DevExpress](https://js.devexpress.com/Overview/DataGrid/). 
 
 Package `QueryAdapter` ini juga mengimplementasikan Laravel default Eloquent builder. Ini membuat anda dapat menggunakan fungsi-fungsi yang ada di Eloquent dapat anda gunakan juga menggunakan package ini.
