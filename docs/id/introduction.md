@@ -53,6 +53,7 @@ $qeury = User::query();
 $data = QueryAdapter::load($query)->where('active', true)->get();
 ```
 
+> Jika anda menggunakan [Data Grid by DevExpress](https://js.devexpress.com/Overview/DataGrid/), anda tidak perlu bingung mebuat request secara manual. kecuali jika anda ingin menambahkan filter sendiri kedalam API Request anda.
 
 
 ### Membuat query untuk filter data berdasarkan request: `/users?filter=["name","contains","jhon"]`:
