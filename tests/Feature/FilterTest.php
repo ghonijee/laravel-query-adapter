@@ -245,3 +245,20 @@ test('can filter data with relations condition', function () {
 
     expect($queryBuilder)->toEqual($expected);
 });
+
+
+test('can filter with string params', function () {
+    $filter = [['comments.comment', 'contains', 'test'], 'and', [['active', '=', 0], 'or', ['active', '=', 1]]];
+    $this->request->replace(['filter' => json_encode($filter)]);
+
+    $query = TestModel::query();
+    $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
+    $expected = TestModel::whereHas('comments', function ($queryComment) {
+        $queryComment->where('comments.comment', 'like', 'ahmad');
+    })->where(function ($q) {
+        $q->where('active', 0);
+        $q->orWhere('active', 1);
+    })->toSql();
+
+    expect($queryBuilder)->toEqual($expected);
+});

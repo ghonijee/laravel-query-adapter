@@ -6,7 +6,7 @@ trait SerializeData
 {
     protected function serializeData(string $key): array
     {
-        if (is_string($this->{$key})) {
+        if (is_string($this->request->{$key})) {
             return json_decode($this->replaceSingleQuote($key));
         }
 
