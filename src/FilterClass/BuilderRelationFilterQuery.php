@@ -11,7 +11,7 @@ use GhoniJee\DxAdapter\FilterClass\QueryClass\NullFilter;
 use GhoniJee\DxAdapter\FilterClass\QueryClass\NumericFilter;
 use GhoniJee\DxAdapter\FilterClass\QueryClass\StringFilter;
 
-class BuilderFilterQuery
+class BuilderRelationFilterQuery
 {
     protected $query;
 
@@ -33,19 +33,23 @@ class BuilderFilterQuery
 
     public function query()
     {
-        switch ($this->filterData->type) {
-            case ValueDataType::ISNULL:
-                return NullFilter::build($this->query, $this->filterData, $this->conjungtion);
-            case ValueDataType::ISDATE:
-                return DateFilter::build($this->query, $this->filterData, $this->conjungtion);
-            case ValueDataType::ISNUMERIC:
-                return NumericFilter::build($this->query, $this->filterData, $this->conjungtion);
-            case ValueDataType::ISSTRING:
-                return StringFilter::build($this->query, $this->filterData, $this->conjungtion);
-            case ValueDataType::ISBOOLEAN:
-                return BooleanFilter::build($this->query, $this->filterData, $this->conjungtion);
+        switch ($this->conjungtion) {
+            case '!':
+                $this->query->whereDoesntHave($this->filterData->relationMethod, function ($relationQuery) {
+                    $relationQuery = BuilderFilterQuery::fromDataType($relationQuery, $this->filterData)->query();
+                });
+                break;
+            case 'or':
+                $this->query->orWhereHas($this->filterData->relationMethod, function ($relationQuery) {
+                    $relationQuery = BuilderFilterQuery::fromDataType($relationQuery, $this->filterData)->query();
+                });
+                break;
             default:
-                throw new Exception("Query class not found");
+                $this->query->whereHas($this->filterData->relationMethod, function ($relationQuery) {
+                    $relationQuery = BuilderFilterQuery::fromDataType($relationQuery, $this->filterData)->query();
+                });
+                break;
         }
+        return $this->query;
     }
 }
