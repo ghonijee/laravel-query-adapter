@@ -10,3 +10,7 @@ All notable changes to `QueryAdapter` will be documented in this file
 
 - Fixing Bug filter by relation data
 - Update scenario for filtered relation data
+
+## 1.0.4-Beta - 2021-11-03
+
+- Fixing Bug Pagination Request
