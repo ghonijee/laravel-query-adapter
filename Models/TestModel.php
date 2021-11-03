@@ -37,6 +37,11 @@ class TestModel extends Model
         return $this->hasMany(TestComment::class, 'test_model_id');
     }
 
+    public function dataComments()
+    {
+        return $this->hasMany(TestComment::class, 'test_model_id');
+    }
+
     public function scopeActive(Builder $query)
     {
         $query->where('active', 1);

@@ -5,6 +5,7 @@ namespace GhoniJee\DxAdapter\Builders;
 use GhoniJee\DxAdapter\Data\FilterData;
 use GhoniJee\DxAdapter\FilterClass\BuilderFilterData;
 use GhoniJee\DxAdapter\FilterClass\BuilderFilterQuery;
+use GhoniJee\DxAdapter\FilterClass\BuilderRelationFilterQuery;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
@@ -21,6 +22,7 @@ trait FilterQuery
         $this->setArray();
 
         $this->buildFilterData();
+
         $this->query = $this->buildFilterQuery($this->query, $this->filter);
 
         return $this;
@@ -38,7 +40,7 @@ trait FilterQuery
         $this->filter = BuilderFilterData::fromRequest($this->filter);
     }
 
-    private function buildFilterQuery(Builder $query, $collection)
+    private function buildFilterQuery(Builder &$query, $collection)
     {
         $collection->each(function ($item) use ($query) {
             if (is_string($item)) {
@@ -54,19 +56,7 @@ trait FilterQuery
             }
 
             if ($this->isRelationFilter($query, $item)) {
-
-                [$relation,] = collect(explode('.', $item->field))
-                    ->pipe(function (Collection $parts) {
-                        return [
-                            $parts->except(count($parts) - 1)->implode('.'),
-                            $parts->last(),
-                        ];
-                    });
-
-                $this->query->whereHas($relation, function (Builder $relationQuery) use ($item) {
-                    $relationQuery = BuilderFilterQuery::fromDataType($relationQuery, $item, $this->conjungtion)->query();
-                });
-
+                $query = BuilderRelationFilterQuery::fromDataType($query, $item, $this->conjungtion)->query();
                 return true;
             }
 
@@ -78,16 +68,14 @@ trait FilterQuery
 
     private function isRelationFilter(Builder $query, FilterData $item)
     {
-        if (!Str::contains($item->field, '.')) {
+        if (!$item->isRelation) {
             return false;
         }
 
-        $firstRelationship = explode('.', $item->field)[0];
-
-        if (!method_exists($query->getModel(), $firstRelationship)) {
+        if (!method_exists($query->getModel(), $item->relationMethod)) {
             return false;
         }
 
-        return is_a($query->getModel()->{$firstRelationship}(), Relation::class);
+        return is_a($query->getModel()->{$item->relationMethod}(), Relation::class);
     }
 }
