@@ -26,7 +26,7 @@ class BuilderFilterQuery
         $this->conjungtion = $conjungtion;
     }
 
-    public static function fromDataType($query, FilterData $filterData, $conjungtion)
+    public static function fromDataType($query, FilterData $filterData, $conjungtion = null)
     {
         return new self($query, $filterData, $conjungtion);
     }
