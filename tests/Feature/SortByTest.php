@@ -1,6 +1,7 @@
 <?php
 
 use GhoniJee\DxAdapter\DxAdapter;
+use GhoniJee\DxAdapter\Models\TestComment;
 use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Http\Request;
 
@@ -62,4 +63,27 @@ test('can build query for select and orderBy DESC', function () {
     $queryExpectation = TestModel::select($select)->orderBy('name', 'desc')->toSql();
 
     expect($query)->toEqual($queryExpectation);
+});
+
+test('can build query for order by relation fieldname with select', function () {
+    $sort = ['desc' => true, 'selector' => 'test.name'];
+    $select = ['test_model_id', 'comment'];
+
+    $this->request->replace(['sort' => $sort, 'select' => $select]);
+
+    $result = DxAdapter::load(TestComment::query()->with('test'), $this->request)->get();
+    $expected = TestComment::select(['comment', 'test_model_id'])->with('test')->orderBy(
+        TestModel::select('name')->whereColumn('test_models.id', 'test_comments.test_model_id')
+    )->get();
+    expect($result)->toEqual($expected);
+});
+
+test('can build query for order by relation fieldname without select', function () {
+    $sort = ['desc' => true, 'selector' => 'test.name'];
+
+    $this->request->replace(['sort' => $sort]);
+
+    $result = DxAdapter::for(TestComment::class, $this->request)->first();
+    $expected = TestComment::where('id', 4)->first();
+    expect($result)->toEqual($expected);
 });
