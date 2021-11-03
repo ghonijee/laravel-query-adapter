@@ -4,6 +4,8 @@ namespace GhoniJee\DxAdapter\Data;
 
 use DateTime;
 use GhoniJee\DxAdapter\Enums\ValueDataType;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class FilterData
 {
@@ -15,11 +17,14 @@ class FilterData
 
     public $type;
 
-    public $relation;
+    public $relationMethod;
+
+    public bool $isRelation = false;
 
     public function __construct($data)
     {
         list($this->field, $this->condition, $this->value) = $data;
+        $this->isRelationFilter();
         $this->setValueType();
     }
 
@@ -80,5 +85,19 @@ class FilterData
             return true;
         }
         return false;
+    }
+
+    public function isRelationFilter()
+    {
+        if (Str::contains($this->field, '.')) {
+            $this->isRelation = true;
+            [$this->relationMethod, $this->field] = collect(explode('.', $this->field))
+                ->pipe(function (Collection $parts) {
+                    return [
+                        $parts->except(count($parts) - 1)->implode('.'),
+                        $parts->last(),
+                    ];
+                });
+        }
     }
 }
