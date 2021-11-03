@@ -237,7 +237,7 @@ test('can filter data with relations condition', function () {
     $query = TestModel::query();
     $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
     $expected = TestModel::whereHas('comments', function ($queryComment) {
-        $queryComment->where('comments.comment', 'like', 'ahmad');
+        $queryComment->where('comment', 'like', 'ahmad');
     })->where(function ($q) {
         $q->where('active', 0);
         $q->orWhere('active', 1);
@@ -247,19 +247,48 @@ test('can filter data with relations condition', function () {
 });
 
 
-test('can filter with string params', function () {
-    $filter = [[['comments.comment', 'contains', 'test'], 'or', ['comments.comment', 'contains', 'est']], 'and', [['active', '=', 0], 'or', ['active', '=', 1]]];
+test('can filter multi relation data with conjungtion OR', function () {
+    $filter = [[['dataComments.comment', 'contains', 'test'], 'or', ['dataComments.comment', 'contains', 'est']], 'and', ['active', '=', 1]];
     $this->request->replace(['filter' => json_encode($filter)]);
 
     $query = TestModel::query();
     $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
-    $expected = TestModel::whereHas('comments', function ($queryComment) {
-        $queryComment->where('comments.comment', 'like', 'test');
-        $queryComment->where('comments.comment', 'like', 'est');
-    })->where(function ($q) {
-        $q->where('active', 0);
-        $q->orWhere('active', 1);
-    })->toSql();
+
+    $expected = TestModel::whereHas('dataComments', function ($queryComment) {
+        $queryComment->where('comment', 'like', 'test');
+    })->orWhereHas('dataComments', function ($queryCommentNew) {
+        $queryCommentNew->where('comment', 'like', 'est');
+    })->where('active', 1)->toSql();
+
+    expect($queryBuilder)->toEqual($expected);
+});
+test('can filter multi relation data with conjungtion AND', function () {
+    $filter = [[['dataComments.comment', 'contains', 'test'], 'and', ['dataComments.comment', 'contains', 'est']], 'and', ['active', '=', 1]];
+    $this->request->replace(['filter' => json_encode($filter)]);
+
+    $query = TestModel::query();
+    $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
+
+    $expected = TestModel::whereHas('dataComments', function ($queryComment) {
+        $queryComment->where('comment', 'like', 'test');
+    })->whereHas('dataComments', function ($queryCommentNew) {
+        $queryCommentNew->where('comment', 'like', 'est');
+    })->where('active', 1)->toSql();
+
+    expect($queryBuilder)->toEqual($expected);
+});
+test('can filter multi relation data with conjungtion NOT', function () {
+    $filter = [[['dataComments.comment', 'contains', 'test'], '!', ['dataComments.comment', 'contains', 'est']], 'and', ['active', '=', 1]];
+    $this->request->replace(['filter' => json_encode($filter)]);
+
+    $query = TestModel::query();
+    $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
+
+    $expected = TestModel::whereHas('dataComments', function ($queryComment) {
+        $queryComment->where('comment', 'like', 'test');
+    })->whereDoesntHave('dataComments', function ($queryCommentNew) {
+        $queryCommentNew->where('comment', 'like', 'est');
+    })->where('active', 1)->toSql();
 
     expect($queryBuilder)->toEqual($expected);
 });
