@@ -109,9 +109,7 @@ class DxAdapter
 
     public function initializeRequest($request): self
     {
-        $this->request = $request
-            ? DxAdapterRequest::fromRequest($request)
-            : app(DxAdapterRequest::class);
+        $this->request = $request ?: app(DxAdapterRequest::class);
 
         return $this;
     }
