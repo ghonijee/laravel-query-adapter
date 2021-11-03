@@ -254,10 +254,12 @@ test('can filter multi relation data with conjungtion OR', function () {
     $query = TestModel::query();
     $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
 
-    $expected = TestModel::whereHas('dataComments', function ($queryComment) {
-        $queryComment->where('comment', 'like', 'test');
-    })->orWhereHas('dataComments', function ($queryCommentNew) {
-        $queryCommentNew->where('comment', 'like', 'est');
+    $expected = TestModel::where(function ($q) {
+        $q->whereHas('dataComments', function ($queryComment) {
+            $queryComment->where('comment', 'like', 'test');
+        })->orWhereHas('dataComments', function ($queryCommentNew) {
+            $queryCommentNew->where('comment', 'like', 'est');
+        });
     })->where('active', 1)->toSql();
 
     expect($queryBuilder)->toEqual($expected);
@@ -269,10 +271,12 @@ test('can filter multi relation data with conjungtion AND', function () {
     $query = TestModel::query();
     $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
 
-    $expected = TestModel::whereHas('dataComments', function ($queryComment) {
-        $queryComment->where('comment', 'like', 'test');
-    })->whereHas('dataComments', function ($queryCommentNew) {
-        $queryCommentNew->where('comment', 'like', 'est');
+    $expected = TestModel::where(function ($q) {
+        $q->whereHas('dataComments', function ($queryComment) {
+            $queryComment->where('comment', 'like', 'test');
+        })->whereHas('dataComments', function ($queryCommentNew) {
+            $queryCommentNew->where('comment', 'like', 'est');
+        });
     })->where('active', 1)->toSql();
 
     expect($queryBuilder)->toEqual($expected);
@@ -284,10 +288,12 @@ test('can filter multi relation data with conjungtion NOT', function () {
     $query = TestModel::query();
     $queryBuilder = DxAdapter::load($query, $this->request)->toSql();
 
-    $expected = TestModel::whereHas('dataComments', function ($queryComment) {
-        $queryComment->where('comment', 'like', 'test');
-    })->whereDoesntHave('dataComments', function ($queryCommentNew) {
-        $queryCommentNew->where('comment', 'like', 'est');
+    $expected = TestModel::where(function ($q) {
+        $q->whereHas('dataComments', function ($queryComment) {
+            $queryComment->where('comment', 'like', 'test');
+        })->whereDoesntHave('dataComments', function ($queryCommentNew) {
+            $queryCommentNew->where('comment', 'like', 'est');
+        });
     })->where('active', 1)->toSql();
 
     expect($queryBuilder)->toEqual($expected);

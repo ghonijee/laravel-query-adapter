@@ -40,7 +40,7 @@ trait FilterQuery
         $this->filter = BuilderFilterData::fromRequest($this->filter);
     }
 
-    private function buildFilterQuery(Builder $query, $collection)
+    private function buildFilterQuery(Builder &$query, $collection)
     {
         $collection->each(function ($item) use ($query) {
             if (is_string($item)) {
@@ -56,7 +56,7 @@ trait FilterQuery
             }
 
             if ($this->isRelationFilter($query, $item)) {
-                $this->query = BuilderRelationFilterQuery::fromDataType($this->query, $item, $this->conjungtion)->query();
+                $query = BuilderRelationFilterQuery::fromDataType($query, $item, $this->conjungtion)->query();
                 return true;
             }
 
