@@ -61,6 +61,8 @@ trait SortByQuery
                 $this->query->orderBy(
                     $relationModel::select($item->field)
                         ->whereColumn($tableRelation . '.' . $relation->getOwnerKeyName(), $tableNameFrom . '.' . $relation->getForeignKeyName()) // targetTable , FromTable
+                    ,
+                    $item->type
                 );
             } else {
                 $this->query->orderBy($item->field, $item->type);
