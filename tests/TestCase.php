@@ -75,7 +75,7 @@ class TestCase extends Orchestra
 
         $data = [
             [
-                'name' => "Ahmad",
+                'name' => "Jee",
                 'last_name' => "Yunus",
                 'address' => "Jl. Pendidikan",
                 'gender' => "L",
@@ -112,31 +112,31 @@ class TestCase extends Orchestra
         $comment = [
             [
                 'test_model_id' => 1,
-                'comment' => "hahsdhshadas"
+                'comment' => "ccc"
             ],
             [
                 'test_model_id' => 3,
-                'comment' => "hahsdhshadas"
+                'comment' => "ddd"
             ],
             [
                 'test_model_id' => 1,
-                'comment' => "hahsdhshadas"
+                'comment' => "bbb"
             ],
             [
                 'test_model_id' => 2,
-                'comment' => "hahsdhshadas"
+                'comment' => "aaa"
             ],
             [
                 'test_model_id' => 1,
-                'comment' => "hahsdhshadas"
+                'comment' => "eee"
             ],
             [
                 'test_model_id' => 2,
-                'comment' => "hahsdhshadas"
+                'comment' => "ffff"
             ],
             [
                 'test_model_id' => 3,
-                'comment' => "hahsdhshadas"
+                'comment' => "gggg"
             ]
         ];
         TestComment::insert($comment);

@@ -175,8 +175,9 @@ test('can filter data with single condition', function () {
     $query = TestModel::query();
 
     $data = DxAdapter::load($query, $this->request)->get();
+    $expect = TestModel::where('name', 'like', 'ahmad')->get();
 
-    expect($data)->toHaveCount(2);
+    expect($data)->toEqual($expect);
 });
 
 test('can multi filter with conjungtion AND', function () {

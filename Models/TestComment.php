@@ -13,6 +13,6 @@ class TestComment extends Model
 
     public function test()
     {
-        return $this->belongsTo(TestModel::class);
+        return $this->belongsTo(TestModel::class, 'test_model_id', 'id');
     }
 }

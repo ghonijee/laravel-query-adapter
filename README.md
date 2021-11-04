@@ -1,7 +1,7 @@
 # Laravel Query Adapter
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ghonijee/laravel-query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
-[![Total Downloads](https://img.shields.io/packagist/dt/ghonijee/laravel-query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ghonijee/query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
+[![Total Downloads](https://img.shields.io/packagist/dt/ghonijee/query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
 [![Actions Status](https://github.com/ghonijee/laravel-query-adapter/actions/workflows/main.yml/badge.svg)](https://github.com/ghonijee/laravel-query-adapter/actions)
 
 ## Installation
@@ -15,10 +15,13 @@ composer require ghonijee/query-adapter
 ## Usage
 
 ```php
+// Use Facade
 $data = QueryAdapter::for(TestModel::class)->get();
 // or
 $data = QueryAdapter::load(TestModel::query())->get();
-//or
+
+
+//or Use Class DxAdapter
 $data = DxAdapter::for(TestModel::class)->get();
 // or
 $data = DxAdapter::load(TestModel::query())->get();
