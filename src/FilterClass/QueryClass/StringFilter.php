@@ -9,12 +9,14 @@ class StringFilter
     protected $query;
     protected $filterData;
     protected $conjungtion;
+    protected $contains;
 
     public function __construct($query, $filterData, $conjungtion)
     {
         $this->query = $query;
         $this->filterData = $filterData;
         $this->conjungtion = $conjungtion;
+        $this->contains = config('dx-adapter.request.like') ?: "like";
     }
 
     public static function build($query, $filterData, $conjungtion)
@@ -43,16 +45,16 @@ class StringFilter
     {
         switch ($this->filterData->condition) {
             case 'contains':
-                $this->query->orWhere($this->filterData->field, 'not like', "%{$this->filterData->value}%");
+                $this->query->orWhere($this->filterData->field, "not $this->contains", "%{$this->filterData->value}%");
                 break;
             case 'notcontains':
-                $this->query->orWhere($this->filterData->field, 'like', "%{$this->filterData->value}%");
+                $this->query->orWhere($this->filterData->field, "$this->contains", "%{$this->filterData->value}%");
                 break;
             case 'startswith':
-                $this->query->orWhere($this->filterData->field, 'not like', "{$this->filterData->value}%");
+                $this->query->orWhere($this->filterData->field, "not $this->contains", "{$this->filterData->value}%");
                 break;
             case 'endswith':
-                $this->query->orWhere($this->filterData->field, 'not like', "%{$this->filterData->value}");
+                $this->query->orWhere($this->filterData->field, "not $this->contains", "%{$this->filterData->value}");
                 break;
             case '=':
                 $this->query->whereNot($this->filterData->field, $this->filterData->value);
@@ -67,16 +69,16 @@ class StringFilter
     {
         switch ($this->filterData->condition) {
             case 'contains':
-                $this->query->orWhere($this->filterData->field, 'like', "%{$this->filterData->value}%");
+                $this->query->orWhere($this->filterData->field, "$this->contains", "%{$this->filterData->value}%");
                 break;
             case 'notcontains':
-                $this->query->orWhere($this->filterData->field, 'not like', "%{$this->filterData->value}%");
+                $this->query->orWhere($this->filterData->field, "not $this->contains", "%{$this->filterData->value}%");
                 break;
             case 'startswith':
-                $this->query->orWhere($this->filterData->field, 'like', "{$this->filterData->value}%");
+                $this->query->orWhere($this->filterData->field, "$this->contains", "{$this->filterData->value}%");
                 break;
             case 'endswith':
-                $this->query->orWhere($this->filterData->field, 'like', "%{$this->filterData->value}");
+                $this->query->orWhere($this->filterData->field, "$this->contains", "%{$this->filterData->value}");
                 break;
             case '=':
                 $this->query->orWhere($this->filterData->field, $this->filterData->value);
@@ -90,16 +92,16 @@ class StringFilter
     {
         switch ($this->filterData->condition) {
             case 'contains':
-                $this->query->where($this->filterData->field, 'like', "%{$this->filterData->value}%");
+                $this->query->where($this->filterData->field, "$this->contains", "%{$this->filterData->value}%");
                 break;
             case 'notcontains':
-                $this->query->where($this->filterData->field, 'not like', "%{$this->filterData->value}%");
+                $this->query->where($this->filterData->field, "not $this->contains", "%{$this->filterData->value}%");
                 break;
             case 'startswith':
-                $this->query->where($this->filterData->field, 'like', "{$this->filterData->value}%");
+                $this->query->where($this->filterData->field, "$this->contains", "{$this->filterData->value}%");
                 break;
             case 'endswith':
-                $this->query->where($this->filterData->field, 'like', "%{$this->filterData->value}");
+                $this->query->where($this->filterData->field, "$this->contains", "%{$this->filterData->value}");
                 break;
             case '=':
                 $this->query->where($this->filterData->field, $this->filterData->value);
