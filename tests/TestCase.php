@@ -44,7 +44,7 @@ class TestCase extends Orchestra
         $app->config->set('dx-adapter.request.order', 'sort');
         $app->config->set('dx-adapter.request.skip', 'skip');
         $app->config->set('dx-adapter.request.take', 'take');
-        $app->config->set('dx-adapter.query.contains', 'LIKE');
+        $app->config->set('dx-adapter.query.contains', 'like');
     }
 
     protected function getPackageProviders($app)

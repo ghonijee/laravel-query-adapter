@@ -16,7 +16,7 @@ class StringFilter
         $this->query = $query;
         $this->filterData = $filterData;
         $this->conjungtion = $conjungtion;
-        $this->contains = config('dx-adapter.request.like') ?: "like";
+        $this->contains = config('dx-adapter.query.contains') ?: "like";
     }
 
     public static function build($query, $filterData, $conjungtion)

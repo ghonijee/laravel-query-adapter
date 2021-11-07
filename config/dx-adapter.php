@@ -12,6 +12,6 @@ return [
         'take' => 'take',
     ],
     'query' => [
-        'contains' => 'LIKE'
+        'contains' => 'like'
     ]
 ];
