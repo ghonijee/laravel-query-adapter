@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/ghonijee/query-adapter.svg?style=flat-square)](https://packagist.org/packages/ghonijee/query-adapter)
 [![Actions Status](https://github.com/ghonijee/laravel-query-adapter/actions/workflows/main.yml/badge.svg)](https://github.com/ghonijee/laravel-query-adapter/actions)
 
-## Documenatation
+## Documentation
 Full Documentation [QueryAdapter Docs](https://query-adapter.netlify.app/docs/). This site documentation is under development.
 
 ## Installation
