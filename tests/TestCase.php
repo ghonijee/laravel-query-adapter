@@ -79,21 +79,24 @@ class TestCase extends Orchestra
                 'last_name' => "Yunus",
                 'address' => "Jl. Pendidikan",
                 'gender' => "L",
-                'active' => true
+                'active' => true,
+                'created_at' => now()->addDays(2)
             ],
             [
                 'name' => "Ahmad",
                 'last_name' => "Ghoni",
                 'address' => "Jl. Pendidikan 2",
                 'gender' => "L",
-                'active' => false
+                'active' => false,
+                'created_at' => now()->addDays(1)
             ],
             [
                 'name' => "Yunus",
                 'last_name' => "Ghoni",
                 'address' => "Jl. Pendidikan 3",
                 'gender' => "L",
-                'active' => false
+                'active' => false,
+                'created_at' => now()
             ]
         ];
 
