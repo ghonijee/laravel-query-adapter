@@ -72,10 +72,12 @@ trait FilterQuery
             return false;
         }
 
-        if (!method_exists($query->getModel(), $item->relationMethod)) {
+        $firstRelationship = explode('.', $item->relationMethod)[0];
+
+        if (!method_exists($query->getModel(), $firstRelationship)) {
             return false;
         }
 
-        return is_a($query->getModel()->{$item->relationMethod}(), Relation::class);
+        return is_a($query->getModel()->{$firstRelationship}(), Relation::class);
     }
 }
