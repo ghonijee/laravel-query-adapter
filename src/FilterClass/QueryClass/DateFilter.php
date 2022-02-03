@@ -48,16 +48,16 @@ class DateFilter
                 $this->query->where($this->filterData->field, '!=', $this->filterData->value);
                 break;
             case '<':
-                $this->query->whereDate($this->filterData->field, '>', Carbon::parse($this->filterData->value)->addDay());
+                $this->query->whereDate($this->filterData->field, '>', Carbon::parse($this->filterData->value));
                 break;
             case '<=':
-                $this->query->whereDate($this->filterData->field, '>=', Carbon::parse($this->filterData->value)->addDay());
+                $this->query->whereDate($this->filterData->field, '>=', Carbon::parse($this->filterData->value));
                 break;
             case '>':
-                $this->query->whereDate($this->filterData->field, '<', Carbon::parse($this->filterData->value)->addDay());
+                $this->query->whereDate($this->filterData->field, '<', Carbon::parse($this->filterData->value));
                 break;
             case '>=':
-                $this->query->whereDate($this->filterData->field, '<=', Carbon::parse($this->filterData->value)->addDay());
+                $this->query->whereDate($this->filterData->field, '<=', Carbon::parse($this->filterData->value));
                 break;
             default:
                 throw new Exception("Error Processing Request");
@@ -71,7 +71,7 @@ class DateFilter
                 $this->query->orWhere($this->filterData->field, '=', $this->filterData->value);
                 break;
             default:
-                $this->query->orWhereDate($this->filterData->field, $this->filterData->condition, Carbon::parse($this->filterData->value)->addDay());
+                $this->query->orWhereDate($this->filterData->field, $this->filterData->condition, Carbon::parse($this->filterData->value));
                 break;
         }
     }
@@ -83,7 +83,7 @@ class DateFilter
                 $this->query->where($this->filterData->field, '=', $this->filterData->value);
                 break;
             default:
-                $this->query->whereDate($this->filterData->field, $this->filterData->condition, Carbon::parse($this->filterData->value)->addDay());
+                $this->query->whereDate($this->filterData->field, $this->filterData->condition, Carbon::parse($this->filterData->value));
                 break;
         }
     }

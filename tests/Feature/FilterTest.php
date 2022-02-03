@@ -4,6 +4,7 @@ use GhoniJee\DxAdapter\DxAdapter;
 use GhoniJee\DxAdapter\Models\TestComment;
 use GhoniJee\DxAdapter\Models\TestModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 beforeEach(function () {
     $this->request = new Request();
@@ -117,6 +118,32 @@ test('can filter date data', function () {
     $queryExpectation = TestModel::where('created_at', '=', '2021-10-12')->toSql();
 
     expect($query)->toEqual($queryExpectation);
+});
+
+test('can filter date data with contion <', function () {
+    $dateFilter = now()->addDays(1)->setTime(0, 0, 0)->format('Y-m-d H:i:s');
+    $filter = ['created_at', '<', $dateFilter]; //->format('Y-m-d H:i:s')
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->get();
+    $queryExpectation = TestModel::whereDate('created_at', '<', $dateFilter)->get();
+
+    expect($query)->toEqual($queryExpectation);
+    expect($query->count())->toEqual($queryExpectation->count());
+});
+
+test('can filter date data with contion <=', function () {
+    $dateFilter = now()->addDays(1)->format('Y-m-d');
+    $filter = ['created_at', '<=', $dateFilter];
+
+    $this->request->replace(['filter' => $filter]);
+
+    $query = DxAdapter::load(TestModel::query(), $this->request)->get();
+    $queryExpectation = TestModel::whereDate('created_at', '<=', $dateFilter)->get();
+
+    expect($query)->toEqual($queryExpectation);
+    expect($query->count())->toEqual($queryExpectation->count());
 });
 
 test('can filter boolean data', function () {

@@ -18,3 +18,8 @@ All notable changes to `QueryAdapter` will be documented in this file
 ## 1.0.5-Beta - 2021-11-04
 
 - Bug Fixed sorted by relation data
+
+## 1.0.7-Beta - 2022-02-03
+
+- Fixing bug filter deep relation model
+- Remove Add Day on Filter Date
