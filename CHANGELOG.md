@@ -19,6 +19,6 @@ All notable changes to `QueryAdapter` will be documented in this file
 
 - Bug Fixed sorted by relation data
 
-## 1.0.6-Beta - 2022-02-03
+## 1.0.7-Beta - 2022-02-03
 
 - Fixing bug filter deep relation model
