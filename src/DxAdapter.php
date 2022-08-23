@@ -137,7 +137,7 @@ class DxAdapter
         try {
             return $this->query->{$method}(...$arguments);
         } catch (Exception $e) {
-            return $e;
+            throw new Exception("Something wrong with Eloquent query builder", 500, $e);
         }
     }
 }
