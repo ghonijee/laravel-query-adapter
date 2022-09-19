@@ -57,7 +57,7 @@ class StringFilter
                 $this->query->orWhere($this->filterData->field, "not $this->contains", "%{$this->filterData->value}");
                 break;
             case '=':
-                $this->query->whereNot($this->filterData->field, $this->filterData->value);
+                $this->query->where($this->filterData->field, "!=", $this->filterData->value);
                 break;
             default:
                 $this->query->whereNot($this->filterData->field, $this->filterData->condition, $this->filterData->value);
